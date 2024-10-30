@@ -1,5 +1,6 @@
 ﻿using Interactables.Interobjects.DoorUtils;
 using InventorySystem.Items;
+using PluginAPI.Core;
 using PluginAPI.Core.Attributes;
 using PluginAPI.Events;
 
@@ -10,13 +11,14 @@ namespace CommonUtilities
         [PluginEvent]
         public void OnPlayerInteractDoor(PlayerInteractDoorEvent ev)
         {
-            if(Plugin.Singleton.Config.RemoteKeycardEnabled)
+            //TODO: make this work for lockboxes too
+            if(Plugin.Singleton.Config.RemoteKeycardEnabled&&!ev.CanOpen)
             {
                 foreach (ItemBase item in ev.Player.Items)
                 {
                     if(ev.Door.RequiredPermissions.CheckPermissions(item, ev.Player.ReferenceHub))
                     {
-                        DoorEvents.TriggerAction(ev.Door, ev.Door.IsConsideredOpen() ? DoorAction.Closed : DoorAction.Opened , ev.Player.ReferenceHub);
+                        ev.Door.NetworkTargetState = !ev.Door.NetworkTargetState;
                         break;
                     }
                 }

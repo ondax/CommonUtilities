@@ -19,7 +19,6 @@ namespace CommonUtilities
         {
             Singleton = this;
             EventManager.RegisterEvents<EventHandlers>(this);
-               
         }
     }
 }
