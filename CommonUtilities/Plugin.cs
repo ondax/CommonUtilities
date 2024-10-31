@@ -1,10 +1,6 @@
-﻿using PluginAPI.Core.Attributes;
+﻿using HarmonyLib;
+using PluginAPI.Core.Attributes;
 using PluginAPI.Events;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CommonUtilities
 {
@@ -19,6 +15,8 @@ namespace CommonUtilities
         {
             Singleton = this;
             EventManager.RegisterEvents<EventHandlers>(this);
+            Harmony harmony = new Harmony("commonutilities");
+            harmony.PatchAll();
         }
     }
 }
